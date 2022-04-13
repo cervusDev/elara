@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "paths": {
+      "@types": ["packages/types"]
+    },
+  },
+  "exclude": [
+    "node_modules",
+    "backup"
+  ]
+}
