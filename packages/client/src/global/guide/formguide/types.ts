@@ -62,5 +62,3 @@ export interface IFormCheckBoxProps {
   onChange?(e: any, v?: any): void
   defaultValue?: string | undefined
 }
-
-export type FormGuideProps = Array<IFormFieldProps | IFormCheckBoxProps>

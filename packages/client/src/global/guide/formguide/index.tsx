@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 
-import { FormGuideProps } from './types'
+import { FormGuideProps } from '../../types'
 
 interface IFormGuide {
   fields: FormGuideProps

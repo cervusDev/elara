@@ -1,6 +1,6 @@
 import logo from 'assets/elara.png'
+import { FormularioLogin } from 'templates/login'
 
-// import { Login } from 'templates/Auth'
 import { Container, Paper, Stack } from '@mui/material'
 
 export function Home() {
@@ -34,8 +34,7 @@ export function Home() {
           }}
         >
           <Stack width='100%' spacing={4} justifyContent='center' alignItems='center'>
-            {/* <img src={logoMobile} alt='ponto web' /> */}
-            {/* <Login /> */}
+            <FormularioLogin />
           </Stack>
         </Paper>
       </Stack>
