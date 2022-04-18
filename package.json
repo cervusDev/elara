@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MONOREPO ELARA",
   "main": "index.js",
-  "repository": "https://github.com/pablogarayprosis/pontoagil",
+  "repository": "https://github.com/gucervus/elara",
   "author": "Gustavo Henrique",
   "license": "MIT",
   "private": true,
@@ -30,10 +30,12 @@
     "plop:provider": "yarn workspace @elara/plop provider",
     "plop:repository": "yarn workspace @elara/plop repository",
     "plop:usecase": "yarn workspace @elara/plop usecase",
-    "plop:grid": "yarn workspace @elara/plop grid",
+    "plop:cadastro": "yarn workspace @elara/plop cadastro",
     "plop:page": "yarn workspace @elara/plop page"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.0",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
@@ -46,8 +48,10 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-yaml": "^0.3.0",
     "jest-diff": "^27.5.1",
+    "msw": "^0.39.2",
     "prettier": "^2.2.1",
     "pretty-format": "^27.5.1",
+    "ts-jest": "^27.1.4",
     "typescript": "^4.5.0"
   },
   "jest": {
@@ -71,8 +75,8 @@
       "^infra/(.*)$": "<rootDir>../packages/server/src/infra/$1",
       "^domain/(.*)$": "<rootDir>../packages/server/src/domain/$1",
       "^shared/(.*)$": "<rootDir>../packages/server/src/shared/$1",
-      "^presenter/(.*)$": "<rootDir>..packages/server/src/presentation/$1",
-      "@types": "<rootDir>..packages/types"
+      "^presentation/(.*)$": "<rootDir>..packages/server/src/presentation/$1",
+      "@types": "<rootDir>../packages/types"
     }
   }
 }

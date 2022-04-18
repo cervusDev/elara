@@ -1,0 +1,25 @@
+{
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "printWidth": 120,
+  "singleQuote": true,
+  "semi": false,
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "jsxSingleQuote": true,
+  "endOfLine": "auto",
+  "importOrder": [
+    "^[react]",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "next-seo.config", 
+    "^templates/(.*)$",
+    "^utils/(.*)$",
+    "^assets/(.*)$",
+    "^@fontsource/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+
+}
