@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,16 +7,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id        Int    @id @default(autoincrement())
-  email     String
-  password  String
-  categoria Int
+model User {
+  id       Int    @id @default(autoincrement())
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  name    String 
+  email    String @unique
+  password String
+
   deletedAt DateTime?
+  updatedAt DateTime? @updatedAt
+  createdAt DateTime  @default(now())
 
-  @@map("usuarios")
+  UserRole       UsersRoles[]
+  UserPermission UsersPermissions[]
+  @@map("users")
 }
 
+model Permission {
+  id Int @id @default(autoincrement())
+
+  vizualizar SN
+  inserir    SN
+  alterar    SN
+  excluir    SN
+
+  deletedAt DateTime?
+  updatedAt DateTime? @updatedAt
+  createdAt DateTime  @default(now())
+
+  UserPermission   UsersPermissions[]
+  PermissionsRoles PermissionsRoles[]
+  @@map("permissions")
+}
+
+model UsersPermissions {
+  id           Int        @id @default(autoincrement())
+  userId       Int        @map("user_id")
+  User         User       @relation(fields: [userId], references: [id])
+  permissionId Int        @map("permission_id")
+  Permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@map("user_permissions")
+}
+
+model Role {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  deletedAt DateTime?
+  updatedAt DateTime? @updatedAt
+  createdAt DateTime  @default(now())
+
+  UserRole         UsersRoles[]
+  PermissionsRoles PermissionsRoles[]
+
+  @@map("roles")
+}
+
+model UsersRoles {
+  id     Int  @id @default(autoincrement())
+  userId Int  @map("user_id")
+  User   User @relation(fields: [userId], references: [id])
+  roleId Int  @map("role_id")
+  Role   Role @relation(fields: [roleId], references: [id])
+
+  @@map("user_roles")
+}
+
+model PermissionsRoles {
+  id           Int        @id @default(autoincrement())
+  roleId       Int        @map("role_id")
+  Role         Role       @relation(fields: [roleId], references: [id])
+  permissionId Int        @map("permission_id")
+  Permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@map("permission_roles")
+}
+
+// Enuns
+
+enum SN {
+  S
+  N
+}

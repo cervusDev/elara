@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from 'nest-router';
-import { v1Module } from '../constants';
-import { UsuarioModule } from './usuario/usuario.module';
+import { v1Module } from '../constants/routes';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    UsuarioModule,
+    UserModule,
     RouterModule.forRoutes(v1Module),
   ],
 })

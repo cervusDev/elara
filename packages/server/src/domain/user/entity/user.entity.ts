@@ -1,11 +1,11 @@
-export class Usuario {
+export class User {
   id?: number;
+
+  name: string;
 
   email: string;
 
   password: string;
-
-  categoriaId: number;
 
   createdAt?: Date;
 
