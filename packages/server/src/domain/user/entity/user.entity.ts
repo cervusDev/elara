@@ -7,9 +7,9 @@ export class User {
 
   password: string;
 
-  createdAt?: Date;
+  deletedAt?: Date;
 
   updatedAt?: Date;
 
-  deletedAt?: Date;
+  createdAt?: Date;
 }

@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthUsecase } from 'domain/auth/usecases/auth.usecase';
 import { JWT } from 'domain/auth/constants/jwt';
+import { CreateUserAdminUsecase } from 'domain/user/usecases/create-user-admin';
 import { UserController } from './user.controller';
 
 @Module({
@@ -14,6 +15,9 @@ import { UserController } from './user.controller';
     }),
   ],
   controllers: [UserController],
-  providers: [AuthUsecase],
+  providers: [
+    AuthUsecase,
+    CreateUserAdminUsecase,
+  ],
 })
 export class UserModule {}
