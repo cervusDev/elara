@@ -8,9 +8,9 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  name    String 
+  name     String
   email    String @unique
   password String
 
@@ -18,30 +18,31 @@ model User {
   updatedAt DateTime? @updatedAt
   createdAt DateTime  @default(now())
 
-  UserRole       UsersRoles[]
-  UserPermission UsersPermissions[]
+  UserRole       UsersRole[]
+  UserPermission UsersPermission[]
   @@map("users")
 }
 
 model Permission {
   id Int @id @default(autoincrement())
 
-  vizualizar SN
-  inserir    SN
-  alterar    SN
-  excluir    SN
+  read   SN
+  create SN
+  update SN
+  delete SN
 
   deletedAt DateTime?
   updatedAt DateTime? @updatedAt
   createdAt DateTime  @default(now())
 
-  UserPermission   UsersPermissions[]
+  UserPermission   UsersPermission[]
   PermissionsRoles PermissionsRoles[]
   @@map("permissions")
 }
 
-model UsersPermissions {
-  id           Int        @id @default(autoincrement())
+model UsersPermission {
+  id Int @id @default(autoincrement())
+
   userId       Int        @map("user_id")
   User         User       @relation(fields: [userId], references: [id])
   permissionId Int        @map("permission_id")
@@ -52,6 +53,7 @@ model UsersPermissions {
 
 model Role {
   id          Int    @id @default(autoincrement())
+
   name        String
   description String
 
@@ -59,13 +61,13 @@ model Role {
   updatedAt DateTime? @updatedAt
   createdAt DateTime  @default(now())
 
-  UserRole         UsersRoles[]
+  UserRole         UsersRole[]
   PermissionsRoles PermissionsRoles[]
 
   @@map("roles")
 }
 
-model UsersRoles {
+model UsersRole {
   id     Int  @id @default(autoincrement())
   userId Int  @map("user_id")
   User   User @relation(fields: [userId], references: [id])
@@ -77,6 +79,7 @@ model UsersRoles {
 
 model PermissionsRoles {
   id           Int        @id @default(autoincrement())
+  
   roleId       Int        @map("role_id")
   Role         Role       @relation(fields: [roleId], references: [id])
   permissionId Int        @map("permission_id")
