@@ -1,5 +1,4 @@
-import logo from 'assets/elara.png'
-import { FormularioLogin } from 'templates/login'
+import { Login } from 'templates/user/atoms/login'
 
 import { Container, Paper, Stack } from '@mui/material'
 
@@ -17,7 +16,6 @@ export function Home() {
       }}
     >
       <Stack spacing={0} justifyContent='center' alignItems='center'>
-        <img style={{ width: 250 }} src={logo} alt='logo prosis' />
         <Paper
           elevation={3}
           sx={{
@@ -34,7 +32,7 @@ export function Home() {
           }}
         >
           <Stack width='100%' spacing={4} justifyContent='center' alignItems='center'>
-            <FormularioLogin />
+            <Login />
           </Stack>
         </Paper>
       </Stack>

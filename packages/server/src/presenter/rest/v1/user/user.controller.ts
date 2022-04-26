@@ -4,7 +4,6 @@ import {
   Controller, Post, Req, UseGuards,
 } from '@nestjs/common';
 import { User } from 'domain/user/entity/user.entity';
-import { LocalGuard } from 'domain/auth/guards/local.guard';
 import { AuthUsecase } from 'domain/auth/usecases/auth.usecase';
 import { CreateUserAdminUsecase } from 'domain/user/usecases/create-user-admin';
 import { JwtGuard } from 'domain/auth/guards/jwt.guard';

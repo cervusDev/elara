@@ -18,12 +18,12 @@ export class UserPrismaRepository implements Partial<IUserRepository> {
       data: {
         ...rest,
         password: hashSync(password, 10),
-        UserPermission: {
+        UsersPermissions: {
           connect: {
             id: 1,
           },
         },
-        UserRole: {
+        UsersRoles: {
           connect: {
             id: 1,
           },
