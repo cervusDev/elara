@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef, useCallback, useImperativeHandle, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 import { DevTool } from '@hookform/devtools'
@@ -7,53 +7,82 @@ import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Di
 import { SxProps } from '@mui/system'
 import * as Yup from 'yup'
 
-interface IProps {
-  sx?: SxProps
-  open: boolean
+export interface DialogGuideProps {
+  children?: ReactNode
+  loading?: boolean
+  title: string | ReactNode
+  submitLabel?: string
   width?: string
   height?: string
-  loading?: boolean
-  defaultValues?: any
-  submitLabel?: string
-  children?: ReactNode
+  sx?: SxProps
   unSubmited?: boolean
-  title: string | ReactNode
   onSubmit?: SubmitHandler<any>
-  onClose: (...args: any) => void
+  defaultValues?: any
   validationSchema?: Yup.AnyObjectSchema
 }
 
-const Props: SxProps = { bgcolor: '#f8f8f8' }
-const development = process.env.NODE_ENV === 'development'
+export interface DialogInperativeHandle {
+  open: () => void
+  close: () => void
+  toggle: () => void
+}
 
-export function DialogGuide({
-  open,
-  title,
-  onClose,
-  children,
-  onSubmit,
-  sx = Props,
-  width = '720px',
-  loading = false,
-  validationSchema,
-  defaultValues = {},
-  unSubmited = false,
-  submitLabel = 'Register',
-  height = 'calc(100vh - 18rem)'
-}: IProps) {
+const Props: SxProps = { bgcolor: '#f8f8f8' }
+
+const DialogInperativeGuide: React.ForwardRefRenderFunction<DialogInperativeHandle, DialogGuideProps> = (
+  {
+    children,
+    title,
+    onSubmit,
+    loading = false,
+    submitLabel = 'Cadastrar',
+    width = '720px',
+    height = 'calc(100vh - 18rem)',
+    sx = Props,
+    unSubmited = false,
+    defaultValues = {},
+    validationSchema
+  },
+  ref
+) => {
+  const [open, setOpen] = useState(false)
   const schema = validationSchema || Yup.object().shape({})
   const methods = useForm({ defaultValues, resolver: yupResolver(schema) })
+
+  const development = import.meta.env.MODE === 'development'
+
+  const openDialog = useCallback(() => {
+    setOpen(true)
+  }, [])
+
+  const closeDialog = useCallback(() => {
+    setOpen(false)
+    methods.reset()
+  }, [methods])
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open: openDialog,
+      close: closeDialog,
+      toggle: () => setOpen(value => !value)
+    }),
+    [closeDialog, openDialog]
+  )
+
   return (
     <Dialog
       open={open}
+      onClose={closeDialog}
       maxWidth='xl'
       scroll='paper'
-      PaperProps={{ sx }}
-      onClose={() => onClose()}
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
+      PaperProps={{
+        sx
+      }}
     >
-      {!unSubmited && onSubmit && (
+      {!unSubmited && onSubmit ? (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <DialogTitle id='scroll-dialog-title'>
@@ -67,7 +96,7 @@ export function DialogGuide({
               </Box>
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose} color='info' disabled={loading}>
+              <Button onClick={closeDialog} color='info' disabled={loading}>
                 Cancelar
               </Button>
               <Box sx={{ m: 1, position: 'relative' }}>
@@ -90,8 +119,7 @@ export function DialogGuide({
             </DialogActions>
           </form>
         </FormProvider>
-      )}
-      {unSubmited && !onSubmit && (
+      ) : (
         <FormProvider {...methods}>
           <DialogTitle id='scroll-dialog-title'>
             <Box display='flex' px={4} justifyContent='space-between' alignItems='center'>
@@ -104,7 +132,7 @@ export function DialogGuide({
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose}>Fechar</Button>
+            <Button onClick={closeDialog}>Fechar</Button>
           </DialogActions>
         </FormProvider>
       )}
@@ -112,3 +140,5 @@ export function DialogGuide({
     </Dialog>
   )
 }
+
+export default forwardRef(DialogInperativeGuide)
