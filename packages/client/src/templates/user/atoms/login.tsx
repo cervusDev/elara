@@ -16,7 +16,7 @@ export function Login() {
     <Box width='100%'>
       <Form ref={formRef} onSubmit={() => {}}>
         <Stack spacing={2}>
-          <TextField variant='filled' fullWidth name='email' label='E-mail' type='text' />
+          <TextField variant='filled' fullWidth name='email' label='E-mail' />
           <TextField variant='filled' fullWidth name='password' label='Password' type='password' />
           <FormControlLabel
             className={style.title}

@@ -50,6 +50,18 @@ export const FormField: React.FC<FormsProps> = ({
     return inputLabelPropsValue
   }
 
+  // function handleBlur(event: FocusEvent<HTMLInputElement>) {
+  //   if (onBlur) {
+  //     onBlur({
+  //       ...event,
+  //       target: {
+  //         ...event.target,
+  //         value: event.target.value
+  //       }
+  //     })
+  //   }
+  // }
+
   return (
     <Controller
       control={control}

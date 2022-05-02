@@ -65,7 +65,7 @@ const DialogInperativeGuide: React.ForwardRefRenderFunction<DialogInperativeHand
     () => ({
       open: openDialog,
       close: closeDialog,
-      toggle: () => setOpen(value => !value)
+      toggle: () => setOpen(_ => !_)
     }),
     [closeDialog, openDialog]
   )
