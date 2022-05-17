@@ -10,7 +10,8 @@
     "**/build": true
   },
   "conventionalCommits.scopes": [
-      "supervisor"
+    "supervisor",
+    "refactor on prisma service"
   ],
   "hide-files.files": []
 }
