@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { hashSync } from 'bcrypt';
 import { User } from 'domain/user/entity/user.entity';
@@ -13,22 +12,25 @@ export class UserPrismaRepository implements Partial<IUserRepository> {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  createUserAdmin({ password, ...rest }: User): Promise<User> {
+  public async createUserAdmin({ password, ...rest }: User): Promise<User> {
     return this.prisma.user.create({
       data: {
         ...rest,
+        admin: true,
         password: hashSync(password, 10),
-        UsersPermissions: {
-          connect: {
-            id: 1,
-          },
-        },
-        UsersRoles: {
-          connect: {
-            id: 1,
-          },
-        },
-      },
-    });
+      }
+      
+    })
   }
 }
+//   UsersPermissions: {
+//     connect: {
+//       id: 1,
+//     },
+//   },
+//   UsersRoles: {
+//     connect: {
+//       id: 1,
+//     },
+//   },
+// },

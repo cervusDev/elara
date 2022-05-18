@@ -7,12 +7,10 @@
   "author": "Gustavo Henrique",
   "license": "MIT",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "tools/*"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "tools/*"
+  ],
   "scripts": {
     "server": "yarn workspace @elara/server start",
     "server:dev": "yarn workspace @elara/server start:dev",
@@ -21,17 +19,7 @@
     "prisma:generate": "yarn workspace @elara/server prisma generate",
     "seed": "yarn workspace @elara/server seed",
     "prestart": "yarn workspace @elara/client dev &",
-    "start": "yarn workspace @elara/server start:dev",
-    "plop:domain": "yarn workspace @elara/plop domain",
-    "plop:entity": "yarn workspace @elara/plop entity",
-    "plop:infra": "yarn workspace @elara/plop infra",
-    "plop:presenter": "yarn workspace @elara/plop presenter",
-    "plop:shared": "yarn workspace @elara/plop shared",
-    "plop:provider": "yarn workspace @elara/plop provider",
-    "plop:repository": "yarn workspace @elara/plop repository",
-    "plop:usecase": "yarn workspace @elara/plop usecase",
-    "plop:cadastro": "yarn workspace @elara/plop cadastro",
-    "plop:page": "yarn workspace @elara/plop page"
+    "start": "yarn workspace @elara/server start:dev"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

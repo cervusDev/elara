@@ -14,95 +14,97 @@ model User {
   email    String @unique
   password String
 
+  admin Boolean? @default(false)
+
   deletedAt DateTime?
   updatedAt DateTime? @updatedAt
   createdAt DateTime  @default(now())
 
-  UsersRoles       UsersRole[]
-  UsersPermissions UsersPermission[]
-  Supervisors      Supervisor[]
+  // UsersRoles       UsersRole[]
+  // UsersPermissions UsersPermission[]
+  // Supervisors      Supervisor[]
   @@map("users")
 }
 
-model Permission {
-  id Int @id @default(autoincrement())
+// model Permission {
+//   id Int @id @default(autoincrement())
 
-  read   SN
-  create SN
-  update SN
-  delete SN
+//   read   SN
+//   create SN
+//   update SN
+//   delete SN
 
-  deletedAt DateTime?
-  updatedAt DateTime? @updatedAt
-  createdAt DateTime  @default(now())
+//   deletedAt DateTime?
+//   updatedAt DateTime? @updatedAt
+//   createdAt DateTime  @default(now())
 
-  UsersPermissions UsersPermission[]
-  PermissionsRoles PermissionRole[]
-  @@map("permissions")
-}
+//   UsersPermissions UsersPermission[]
+//   PermissionsRoles PermissionRole[]
+//   @@map("permissions")
+// }
 
-model UsersPermission {
-  id Int @id @default(autoincrement())
+// model UsersPermission {
+//   id Int @id @default(autoincrement())
 
-  userId       Int        @map("user_id")
-  User         User       @relation(fields: [userId], references: [id])
-  permissionId Int        @map("permission_id")
-  Permission   Permission @relation(fields: [permissionId], references: [id])
+//   userId       Int        @map("user_id")
+//   User         User       @relation(fields: [userId], references: [id])
+//   permissionId Int        @map("permission_id")
+//   Permission   Permission @relation(fields: [permissionId], references: [id])
 
-  @@map("user_permissions")
-}
+//   @@map("user_permissions")
+// }
 
-model Role {
-  id Int @id @default(autoincrement())
+// model Role {
+//   id Int @id @default(autoincrement())
 
-  name        String
-  description String
+//   name        String
+//   description String
 
-  deletedAt DateTime?
-  updatedAt DateTime? @updatedAt
-  createdAt DateTime  @default(now())
+//   deletedAt DateTime?
+//   updatedAt DateTime? @updatedAt
+//   createdAt DateTime  @default(now())
 
-  UsersRoles       UsersRole[]
-  PermissionsRoles PermissionRole[]
+//   UsersRoles       UsersRole[]
+//   PermissionsRoles PermissionRole[]
 
-  @@map("roles")
-}
+//   @@map("roles")
+// }
 
-model UsersRole {
-  id     Int  @id @default(autoincrement())
-  userId Int  @map("user_id")
-  User   User @relation(fields: [userId], references: [id])
-  roleId Int  @map("role_id")
-  Role   Role @relation(fields: [roleId], references: [id])
+// model UsersRole {
+//   id     Int  @id @default(autoincrement())
+//   userId Int  @map("user_id")
+//   User   User @relation(fields: [userId], references: [id])
+//   roleId Int  @map("role_id")
+//   Role   Role @relation(fields: [roleId], references: [id])
 
-  @@map("user_roles")
-}
+//   @@map("user_roles")
+// }
 
-model PermissionRole {
-  id Int @id @default(autoincrement())
+// model PermissionRole {
+//   id Int @id @default(autoincrement())
 
-  roleId       Int        @map("role_id")
-  Role         Role       @relation(fields: [roleId], references: [id])
-  permissionId Int        @map("permission_id")
-  Permission   Permission @relation(fields: [permissionId], references: [id])
+//   roleId       Int        @map("role_id")
+//   Role         Role       @relation(fields: [roleId], references: [id])
+//   permissionId Int        @map("permission_id")
+//   Permission   Permission @relation(fields: [permissionId], references: [id])
 
-  @@map("permission_roles")
-}
+//   @@map("permission_roles")
+// }
 
-model Supervisor {
-  id Int @id @default(autoincrement())
+// model Supervisor {
+//   id Int @id @default(autoincrement())
 
-  userId Int  @map("user_id")
-  User   User @relation(fields: [userId], references: [id])
+//   userId Int  @map("user_id")
+//   User   User @relation(fields: [userId], references: [id])
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  deletedAt DateTime?
-}
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime? @updatedAt
+//   deletedAt DateTime?
+// }
 
 // Enuns
 
-enum SN {
-  S
-  N
-}
+// enum SN {
+//   S
+//   N
+// }

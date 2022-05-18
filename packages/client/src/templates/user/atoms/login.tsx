@@ -1,20 +1,18 @@
 import { useRef } from 'react'
 
 import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Stack, TextField } from '@mui/material'
-import { FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
 import { useStyles } from 'global/styles/useStyles'
 
-import { CreateUserForm } from './create-user'
+import { CreateUserModal } from '../atoms/modals'
 
 export function Login() {
-  const formRef = useRef<FormHandles>(null)
+  const formRef = useRef(null)
 
   const style = useStyles()
 
   return (
     <Box width='100%'>
-      <Form ref={formRef} onSubmit={() => {}}>
+      <form ref={formRef} onSubmit={() => {}}>
         <Stack spacing={2}>
           <TextField variant='filled' fullWidth name='email' label='E-mail' />
           <TextField variant='filled' fullWidth name='password' label='Password' type='password' />
@@ -37,7 +35,7 @@ export function Login() {
         <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2, background: '#265b83' }}>
           Sign-in
         </Button>
-      </Form>
+      </form>
       <Grid container>
         <Grid item xs>
           <Link href='#' variant='button' sx={{ color: '#265b83', cursor: 'pointer' }}>
@@ -45,7 +43,7 @@ export function Login() {
           </Link>
         </Grid>
         <Grid item>
-          <CreateUserForm />
+          <CreateUserModal />
         </Grid>
       </Grid>
     </Box>

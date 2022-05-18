@@ -7,6 +7,8 @@ export class User {
 
   password: string;
 
+  admin?: boolean;
+
   deletedAt?: Date;
 
   updatedAt?: Date;
