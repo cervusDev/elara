@@ -12,7 +12,8 @@
   "conventionalCommits.scopes": [
     "supervisor",
     "refactor on prisma service",
-    "refactor-packages"
+    "refactor-packages",
+    "api-service"
   ],
   "hide-files.files": []
 }
