@@ -1,5 +1,5 @@
+import { AuthContextProvider } from 'context/Auth'
 import { BrowserRouter } from 'react-router-dom'
-
 import { ReactQuery } from './react-query'
 
 interface IProps {
@@ -9,7 +9,9 @@ interface IProps {
 export function Providers({ children }: IProps) {
   return (
     <ReactQuery>
-      <BrowserRouter>{children}</BrowserRouter>
+      <BrowserRouter>
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </BrowserRouter>
     </ReactQuery>
   )
 }

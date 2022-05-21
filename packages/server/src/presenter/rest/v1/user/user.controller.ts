@@ -1,27 +1,28 @@
 import {
   Body,
-  Controller, Post, Req, UseGuards,
+  Controller, Get, Post, Query, Param
 } from '@nestjs/common';
 import { User } from 'domain/user/entity/user.entity';
-import { AuthUsecase } from 'domain/auth/usecases/auth.usecase';
-import { CreateUserAdminUsecase } from 'domain/user/usecases/create-user-admin';
-import { JwtGuard } from 'domain/auth/guards/jwt.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserUsecase } from 'domain/user/usecases/create-user.usecase';
+import { FindByCustumerUsecase } from 'domain/user/usecases/find-user.usecase';
 
-@UseGuards(JwtGuard)
 @Controller()
 export class UserController {
   constructor(
-    private readonly authusecase: AuthUsecase,
-    private readonly createUserAdminUsecase: CreateUserAdminUsecase,
+    private readonly createUserUsecase: CreateUserUsecase,
+    private readonly findByCustumerUsecase: FindByCustumerUsecase,
   ) {}
 
-  @Post('session')
-  public async login(@Req() req: any) {
-    return this.authusecase.login(req.user);
+  @Post()
+  public async create(@Body() input: CreateUserDto): Promise<User> {
+    return this.createUserUsecase.execute(input);
   }
 
-  public async createAdmin(@Body() input: CreateUserDto): Promise<User> {
-    return this.createUserAdminUsecase.execute(input);
+  @Get('/:custumerId')
+  public async findByCustumer(
+    @Param('custumerId') custumerId: number,
+  ): Promise<User[]> {
+    return this.findByCustumerUsecase.execute({custumerId});
   }
 }

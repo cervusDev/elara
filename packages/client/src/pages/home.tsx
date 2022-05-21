@@ -1,4 +1,4 @@
-import { Login } from 'templates/user/atoms/login'
+import { Login } from 'templates/custumer/atoms/login'
 
 import { Container, Paper, Stack } from '@mui/material'
 

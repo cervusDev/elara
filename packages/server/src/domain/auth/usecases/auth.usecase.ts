@@ -1,11 +1,12 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { compareSync } from 'bcrypt';
 import { PROVIDER } from 'domain/user/constants/provider';
-import { User } from 'domain/user/entity/user.entity';
-import { IUserRepository } from 'domain/user/repository/users-repository';
+import { Custumer } from 'domain/custumer/entity/custumer.entity';
 import { JwtService } from '@nestjs/jwt';
-
-export interface IUserAuth {
+import { MessagesHelper } from 'domain/auth/constants/error'
+import { ICustumerRepository } from 'domain/custumer/repository/custumers-repository';
+import { PROVIDER as CUSTUMER } from 'domain/custumer/constants/provider'
+export interface ICustumerAuth {
   sub: number;
   email: string;
   nome: string;
@@ -19,16 +20,16 @@ export interface IValidate {
 @Injectable()
 export class AuthUsecase {
   constructor(
-    @Inject(PROVIDER.USUARIOREPOSITORY)
-    private readonly userRepository: IUserRepository,
     private readonly jwtService: JwtService,
+    @Inject(CUSTUMER.REPOSITORY)
+    private readonly custumerRepository: ICustumerRepository,
   ) {}
 
-  public async login(user: User) {
-    const payload: IUserAuth = {
-      sub: user.id,
-      email: user.email,
-      nome: user.name,
+  public async login(custumer: Custumer) {
+    const payload: ICustumerAuth = {
+      sub: custumer.id,
+      nome: custumer.name,
+      email: custumer.email,
     };
 
     return {
@@ -37,18 +38,18 @@ export class AuthUsecase {
   }
 
   public async ValidateUser({ email, password }: IValidate) {
-    const user = await this.userRepository.findByEmail(email);
+    const custumer = await this.custumerRepository.findByEmail(email);
 
-    if (!user) {
-      return new BadRequestException('Usuário não encontrado');
+    if (!custumer) {
+      return new BadRequestException(MessagesHelper.NOT_FOUND);
     }
 
-    const isPasswordValid = compareSync(password, user.password);
+    const isPasswordValid = compareSync(password, custumer.password);
 
     if (!isPasswordValid) {
-      return new BadRequestException('senha inválida');
+      return new BadRequestException(MessagesHelper.PASSWORD);
     }
 
-    return user;
+    return custumer;
   }
 }

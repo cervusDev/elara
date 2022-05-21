@@ -11,7 +11,7 @@ model User {
   id Int @id @default(autoincrement())
 
   name     String
-  email    String @unique
+  email    String
   password String
 
   admin Boolean? @default(false)
@@ -20,10 +20,46 @@ model User {
   updatedAt DateTime? @updatedAt
   createdAt DateTime  @default(now())
 
+  custumerId Int?
+  Custumer   Custumer? @relation(fields: [custumerId], references: [id])
+
+  Task Task[]
   // UsersRoles       UsersRole[]
   // UsersPermissions UsersPermission[]
   // Supervisors      Supervisor[]
   @@map("users")
+}
+
+model Custumer {
+  id Int @id @default(autoincrement())
+
+  name     String
+  username String
+  email    String
+  password String
+
+  deletedAt DateTime?
+  updatedAt DateTime? @updatedAt
+
+  User User[]
+
+  @@map("custumers")
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+
+  description String
+  state       STATE
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+}
+
+enum STATE {
+  PENDING
+  PROGRESS
+  DONE
 }
 
 // model Permission {

@@ -10,13 +10,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'email' });
   }
 
-  public async validate(email: string, password: string) {
-    const user = await this.authService.ValidateUser({ email, password });
+  async validate(email: string, password: string) {
+    const custumer = await this.authService.ValidateUser({ email, password });
 
-    if (!user) {
-      throw new UnauthorizedException(MessagesHelper.PASSWORD_OR_EMAIL_INVALID);
+    if (!custumer) {
+      throw new UnauthorizedException(MessagesHelper.INVALID);
     }
 
-    return user;
+    return custumer;
   }
 }

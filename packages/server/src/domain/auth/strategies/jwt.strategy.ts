@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JWT } from '../constants/jwt';
 
-export interface AuthUser {
+export interface AuthCustumer {
   sub: number;
   email: string;
 }
@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  public async validate({ sub, ...rest }: any) {
-    return { id: sub, ...rest } as AuthUser;
+  async validate({ sub, ...rest }: any) {
+    return { id: sub, ...rest } as AuthCustumer;
   }
 }

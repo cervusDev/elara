@@ -1,4 +1,4 @@
-import { axiosInstance } from "./axios"
+import { axiosInstance } from './axios'
 
 type QueryProps = Record<string, any>
 type DataPatch<P> = Partial<P>
@@ -9,22 +9,26 @@ interface IGetById {
 }
 
 export const mountUrl = (url: string, record: Record<string, any>) => {
-  let arr: Array<string> = [];
-  let queryParams: Array<string> = [];
-  
+  let arr: Array<string> = []
+  let queryParams: Array<string> = []
+
   Object.entries(record).forEach(([key, value]) => {
-      const param = `${key}=${value}`;
-      arr.push(param)
+    const param = `${key}=${value}`
+    arr.push(param)
   })
 
   for (let index = 0; index < arr.length; index++) {
-      if (index === 0) {
-          queryParams.push(`?${arr[index]}`)
-      }else {
-          queryParams.push(arr[index])
-      }
+    if (index === 0) {
+      queryParams.push(`?${arr[index]}`)
+    } else {
+      queryParams.push(arr[index])
+    }
   }
-  return `${url}` + queryParams.join('&');
+  return `${url}` + queryParams.join('&')
+}
+interface IGetById {
+  id: number
+  query?: QueryProps
 }
 
 export class ApiService<T = never, R = T> {
@@ -61,5 +65,34 @@ export class ApiService<T = never, R = T> {
 
   public put(data: Partial<T>, v = 'v1') {
     return axiosInstance.put<Partial<T>, R>(`${v}/${this.DOMAIN_REF}`, data) as unknown as Promise<R>
+  }
+
+  public getOne(queryParams: QueryProps, v = 'v1') {
+    const url = mountUrl(this.DOMAIN_REF, queryParams)
+    return axiosInstance.get<R>(`${v}/${url}`) as unknown as Promise<R>
+  }
+
+  public softDelete(id: number, data?: any, v = 'v1') {
+    return axiosInstance.put<void>(`${v}/${this.DOMAIN_REF}/${id}/soft-delete`, data) as unknown as Promise<void>
+  }
+
+  public upload(data: any, v = 'v1') {
+    return axiosInstance.post<T, R>(`${v}/${this.DOMAIN_REF}/upload`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }) as unknown as Promise<R>
+  }
+
+  public formData(data: any, v = 'v1') {
+    return axiosInstance.post<T, R>(`${v}/${this.DOMAIN_REF}`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }) as unknown as Promise<R>
+  }
+
+  public logs<P>(id: number, v = 'v1') {
+    return axiosInstance.get<R>(`${v}/${this.DOMAIN_REF}/${id}/logs`) as unknown as Promise<P[]>
   }
 }
