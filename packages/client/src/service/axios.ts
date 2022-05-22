@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(async config => {
 
 axiosInstance.interceptors.response.use(
   response => {
-    return response.data.data
+    return response.data
   },
 
   error => {
@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
         case 401:
           const { path } = error.response.data
 
-          if (path === '/v1/auth/session') {
+          if (path === '/v1/custumers/session') {
             Cookies.remove('JWT')
           } else {
             Cookies.remove('JWT')

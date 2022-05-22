@@ -3,10 +3,11 @@ import { DialogInperativeHandle } from 'global/guides/dialogGuide'
 import { SubmitHandler } from "react-hook-form"
 import { users } from 'service'
 import { queryClient } from "providers/react-query"
+import { useCustumers } from 'global/store/custumer'
 
 export function UserAddService() {
   const ref = useRef<DialogInperativeHandle>(null)
-  const custumer = 1
+  const { token: { sub: custumerId } } = useCustumers()
   const { mutate, isLoading } = users.mutations.useAdd()
 
   const handleSubmit: SubmitHandler<any> = data => {
@@ -17,7 +18,7 @@ export function UserAddService() {
 
     mutate([json], {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users', custumer])
+        queryClient.invalidateQueries(['users', custumerId])
         ref.current?.close()
       },
       onError: (err) => {

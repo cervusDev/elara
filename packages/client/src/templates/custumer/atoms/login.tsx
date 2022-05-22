@@ -1,10 +1,11 @@
 import { useLayoutEffect } from 'react'
-import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Stack, TextField } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, Grid, Link, Stack } from '@mui/material'
 import { useStyles } from 'global/styles/useStyles'
 import { useAuth } from 'hooks'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CreateCustumerModal } from './modals'
+import { useCustumers } from 'global/store/custumer'
 
 import * as Yup from 'yup'
 import { FormField } from 'global/components/form'
@@ -16,7 +17,9 @@ export const schema = Yup.object().shape({
 
 
 export function Login() {
-  const { handleLogin, handleLogout, auth } = useAuth()
+  const { handleLogin, handleLogout } = useAuth()
+  const { auth } = useCustumers()
+
   const style = useStyles()
 
   const methods = useForm({

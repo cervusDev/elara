@@ -2,7 +2,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { Excluir } from '../atoms/modals/Excluir'
 export const columns: GridColDef[] = [
   {
-    width: 100,
+    width: 130,
     field: 'id',
     sortable: false,
     editable: false,
@@ -10,7 +10,7 @@ export const columns: GridColDef[] = [
     filterable: false,
   },
   {
-    width: 150,
+    width: 280,
     field: 'name',
     sortable: false,
     editable: false,
@@ -18,7 +18,7 @@ export const columns: GridColDef[] = [
     filterable: false,
   },
   {
-    width: 180,
+    width: 280,
     field: 'email',
     sortable: false,
     editable: false,
@@ -26,12 +26,13 @@ export const columns: GridColDef[] = [
     filterable: false,
   },
   {
-    width: 150,
+    width: 445,
     field: ' ',
     sortable: false,
     editable: false,
     headerName: ' ',
     filterable: false,
+    align: 'right',
     renderCell: Excluir
   },
 ]

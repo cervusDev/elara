@@ -1,18 +1,17 @@
 import { AxiosError } from 'axios'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { SubmitHandler } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router'
-
+import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
 import { queryClient } from 'providers/react-query'
 import { Api } from 'service/'
 import { createContext } from 'react'
+import { useCustumers } from 'global/store/custumer'
 
 export interface IAuthContext {
-  auth: boolean
-  loading: boolean
-  handleLogin: SubmitHandler<any>
   handleLogout: () => void
+  handleLogin: SubmitHandler<any>
 }
 
 export type Login = {
@@ -29,29 +28,32 @@ export const AuthContext = createContext({} as IAuthContext)
 export const AuthContextProvider: React.FC = ({ children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const [loading, setLoading] = useState(false)
-  const [auth, setAuth] = useState(Boolean(Cookies.get(COOKIE.JWT)))
 
   const handleLogin: SubmitHandler<Login> = useCallback(
     async data => {
-      try {
-        Cookies.remove(COOKIE.JWT)
-
+      try { 
+        Cookies.remove('JWT')
         queryClient.invalidateQueries('users')
-        setLoading(false)
 
-        await Api.login.post(data)
+        useCustumers.setState({ loading: true })
 
-        Cookies.set(COOKIE.JWT, 'true')
-        setAuth(true)
+        const { token } = await Api.login.post(data)
 
-        setLoading(false)
+        Cookies.set('JWT', token, { expires: 1, sameSite: 'lax' })
+        const decode = jwt_decode<any>(token)
+
+
+        useCustumers.setState({ token: decode })
+        useCustumers.setState({ auth: true })
+
+        useCustumers.setState({ loading: false })
+
         navigate('/users')
+
       } catch (error) {
         const { response } = error as AxiosError
-        console.log("error", response)
         if (response && response.status === 401) {
-          setLoading(false)
+          useCustumers.setState({ loading: false })
         }
       }
     },
@@ -64,12 +66,10 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     if (pathname !== '/') {
       navigate('/')
     }
-    setAuth(false)
+    useCustumers.setState({ auth: false })
   }
 
   const value: IAuthContext = {
-    auth,
-    loading,
     handleLogin,
     handleLogout
   }

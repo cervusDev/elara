@@ -40,6 +40,10 @@ export class UserPrismaRepository implements Partial<IUserRepository> {
       }
     })
   }
+
+  public async delete(id: number): Promise<void> {
+    await this.prisma.user.delete({ where: { id } })
+  }
 }
 //   UsersPermissions: {
 //     connect: {

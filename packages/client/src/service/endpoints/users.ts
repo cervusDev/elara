@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "react-query";
 import { ApiService } from "service/api.service";
 import { ErrorHandler as Err } from 'service';
+import { useCustumers } from 'global/store/custumer'
 import { User } from '@types'
 
 export namespace users {
@@ -12,8 +13,7 @@ export namespace users {
   type Delete = Parameters<typeof endpoint.delete>
 
   export function useFetching() {
-    const custumerId = 1
-    
+    const { token: { sub: custumerId } } = useCustumers()
     return useQuery<User[]>(['users', custumerId], () => endpoint.getParam(custumerId).then(res => res), {
       enabled: custumerId > 0
     });
@@ -23,10 +23,6 @@ export namespace users {
 
     export function useAdd() {
       return useMutation<User, Err, Post>(data => endpoint.post(...data))
-    }
-
-    export function useUpdate() {
-      return useMutation<User, Err, Patch>(data => endpoint.patch(...data))
     }
 
     export function useRemove() {
