@@ -62,37 +62,4 @@ export class ApiService<T = never, R = T> {
   public delete(id: number, v = 'v1') {
     return axiosInstance.delete<void>(`${v}/${this.DOMAIN_REF}/${id}`) as unknown as Promise<void>
   }
-
-  public put(data: Partial<T>, v = 'v1') {
-    return axiosInstance.put<Partial<T>, R>(`${v}/${this.DOMAIN_REF}`, data) as unknown as Promise<R>
-  }
-
-  public getOne(queryParams: QueryProps, v = 'v1') {
-    const url = mountUrl(this.DOMAIN_REF, queryParams)
-    return axiosInstance.get<R>(`${v}/${url}`) as unknown as Promise<R>
-  }
-
-  public softDelete(id: number, data?: any, v = 'v1') {
-    return axiosInstance.put<void>(`${v}/${this.DOMAIN_REF}/${id}/soft-delete`, data) as unknown as Promise<void>
-  }
-
-  public upload(data: any, v = 'v1') {
-    return axiosInstance.post<T, R>(`${v}/${this.DOMAIN_REF}/upload`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }) as unknown as Promise<R>
-  }
-
-  public formData(data: any, v = 'v1') {
-    return axiosInstance.post<T, R>(`${v}/${this.DOMAIN_REF}`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }) as unknown as Promise<R>
-  }
-
-  public logs<P>(id: number, v = 'v1') {
-    return axiosInstance.get<R>(`${v}/${this.DOMAIN_REF}/${id}/logs`) as unknown as Promise<P[]>
-  }
 }
